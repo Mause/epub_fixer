@@ -2,6 +2,7 @@ from argparse import ArgumentParser
 from ebooklib.epub import read_epub, write_epub
 import re
 from epubcheck import EpubCheck
+from rich import print
 
 parser = ArgumentParser()
 parser.add_argument("filename", help="the file to read")
