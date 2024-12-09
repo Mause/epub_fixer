@@ -16,7 +16,7 @@ if not result.messages:
     print("No issues found")
     exit(0)
 
-book = read_epub(args.filename)
+book = read_epub(args.filename, {"ignore_ncx": False})
 if book.title == "Unknown Title":
     raise ValueError("Unknown title")
 
