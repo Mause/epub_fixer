@@ -20,7 +20,8 @@ book = read_epub(args.filename, {"ignore_ncx": False})
 
 for message in result.messages:
     print(message)
-    if message.level == "ERROR":
+    msg = message.message
+    if msg == 'The "direction" property must not be included in an EPUB Style Sheet.':
         (item,) = book.get_items_of_media_type("text/css")
 
         item.content = re.sub(
@@ -28,13 +29,16 @@ for message in result.messages:
             lambda *args: "",
             item.content.decode("utf-8"),
         ).encode("utf-8")
-    elif message.id == "RSC-017":
+    elif (
+        msg
+        == 'Warning while parsing file: The "head" element should have a "title" child element.'
+    ):
         name, row, col = message.location.split(":")
         name = name.split("/", 2)[-1]
         item = next(i for i in book.items if i.file_name == name)
         item.title = input("new title? ")
     else:
-        raise Exception(f"Unknown issue: {message.message}")
+        raise Exception(f"Unknown issue: {msg}")
 
 
 write_epub(args.filename + ".fixed.epub", book)
