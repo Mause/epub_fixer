@@ -29,8 +29,8 @@ for message in result.messages:
             item.content.decode("utf-8"),
         ).encode("utf-8")
     elif message.id == "RSC-017":
-        name = message.location.split("/", 2)[-1]
-        name, *_ = name.split(":")
+        name, row, col = message.location.split(":")
+        name = name.split("/", 2)[-1]
         item = next(i for i in book.items if i.file_name == name)
         item.title = input("new title? ")
     else:
