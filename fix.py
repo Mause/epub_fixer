@@ -16,8 +16,6 @@ if not result.messages:
     exit(0)
 
 book = read_epub(args.filename, {"ignore_ncx": False})
-if book.title == "Unknown Title":
-    raise ValueError("Unknown title")
 
 for message in result.messages:
     print(message)
@@ -29,6 +27,11 @@ for message in result.messages:
             lambda *args: "",
             item.content.decode("utf-8"),
         ).encode("utf-8")
+    elif message.id == "RSC-017":
+        name = message.location.split("/", 2)[-1]
+        name, *_ = name.split(":")
+        item = next(i for i in book.items if i.file_name == name)
+        item.title = input("new title? ")
     else:
         raise Exception(f"Unknown issue: {message.message}")
 
