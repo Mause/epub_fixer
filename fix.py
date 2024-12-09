@@ -32,6 +32,8 @@ for message in result.messages:
             lambda *args: "",
             item.content.decode("utf-8"),
         ).encode("utf-8")
+    else:
+        raise Exception(f"Unknown issue: {message.message}")
 
 
 write_epub(args.filename + ".fixed.epub", book)
