@@ -31,12 +31,11 @@ wheels = [
 [[package]]
 name = "ebooklib"
 version = "0.18"
-source = { registry = "https://pypi.org/simple" }
+source = { git = "https://github.com/aerkalov/ebooklib#e96c5016ee469f68c178d1872fc9ea8e882adcaa" }
 dependencies = [
     { name = "lxml" },
     { name = "six" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e8/1d/90bb33317d756c25b40bb55312dda30a94afb691755763fc00976250c82b/EbookLib-0.18.tar.gz", hash = "sha256:38562643a7bc94d9bf56e9930b4927e4e93b5d1d0917f697a6454db5a1c1a533", size = 115484 }
 
 [[package]]
 name = "epubcheck"
@@ -92,7 +91,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "ebooklib", specifier = ">=0.18" },
+    { name = "ebooklib", git = "https://github.com/aerkalov/ebooklib" },
     { name = "epubcheck", specifier = ">=5.1.0" },
     { name = "rich", specifier = ">=13.9.4" },
 ]
