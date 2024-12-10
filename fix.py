@@ -12,7 +12,11 @@ def main():
     parser = ArgumentParser()
     parser.add_argument("filename", help="the file to read")
     args = parser.parse_args()
-    default_title = Path(args.filename).stem
+    title = Prompt.ask(
+        "Enter a title for this book",
+        default=Path(args.filename).stem,
+        show_default=True,
+    )
 
     print("checking for issues")
     result = EpubCheck(args.filename, autorun=False)
@@ -45,11 +49,19 @@ def main():
             name, row, col = message.location.split(":")
             name = name.split("/", 2)[-1]
             item = next(i for i in book.items if i.file_name == name)
-            item.title = Prompt.ask(
-                "Enter a title for this item", default=default_title, show_default=True
-            )
+            if name.endswith("toc.xhtml"):
+                item.title = title
+            else:
+                item.title = Prompt.ask(
+                    "Enter a title for this item",
+                    default=default_title,
+                    show_default=True,
+                )
         else:
             raise Exception(f"Unknown issue: {msg}")
+
+    if book.title == "Unknown Title":
+        book.title = title
 
     write_epub(args.filename + ".fixed.epub", book)
 
