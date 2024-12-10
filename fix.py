@@ -1,15 +1,18 @@
 import re
 from argparse import ArgumentParser
+from pathlib import Path
 
 from ebooklib.epub import read_epub, write_epub
 from epubcheck import EpubCheck
 from rich import print
+from rich.prompt import Prompt
 
 
 def main():
     parser = ArgumentParser()
     parser.add_argument("filename", help="the file to read")
     args = parser.parse_args()
+    default_title = Path(args.filename).stem
 
     print("checking for issues")
     result = EpubCheck(args.filename, autorun=False)
@@ -42,7 +45,9 @@ def main():
             name, row, col = message.location.split(":")
             name = name.split("/", 2)[-1]
             item = next(i for i in book.items if i.file_name == name)
-            item.title = input("new title? ")
+            item.title = Prompt.ask(
+                "Enter a title for this item", default=default_title, show_default=True
+            )
         else:
             raise Exception(f"Unknown issue: {msg}")
 
