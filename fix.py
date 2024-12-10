@@ -1,7 +1,7 @@
 import re
 from argparse import ArgumentParser
-from pathlib import Path
 from functools import cache
+from pathlib import Path
 
 from ebooklib.epub import read_epub, write_epub
 from epubcheck import EpubCheck
