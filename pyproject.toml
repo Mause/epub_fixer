@@ -18,7 +18,7 @@ dev = [
 ]
 
 [tool.ruff.lint]
-select = ["I"]
+select = ["I", "E", "F"]
 
 [tool.uv.sources]
 ebooklib = { git = "https://github.com/aerkalov/ebooklib" }

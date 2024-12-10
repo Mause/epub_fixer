@@ -45,10 +45,7 @@ def main():
                 lambda *args: "",
                 item.content.decode("utf-8"),
             ).encode("utf-8")
-        elif (
-            msg
-            == 'Warning while parsing file: The "head" element should have a "title" child element.'
-        ):
+        elif msg.endswith('The "head" element should have a "title" child element.'):
             name, row, col = message.location.split(":")
             name = name.split("/", 2)[-1]
             item = next(i for i in book.items if i.file_name == name)
