@@ -63,11 +63,11 @@ def main():
             raise Exception(f"Unknown issue: {msg}")
 
     if book.title == "Unknown Title":
-        book.title = title()
+        book.get_metadata("DC", "title")[0] = (title(), {})
 
     authors = book.get_metadata("DC", "creator")
     if authors[0][0] == "Unknown Author":
-        book.author = Prompt.ask("Enter an author for this book")
+        authors[0] = (Prompt.ask("Enter an author for this book"), {})
 
     write_epub(args.filename + ".fixed.epub", book)
 
