@@ -63,6 +63,10 @@ def main():
     if book.title == "Unknown Title":
         book.title = title
 
+    authors = book.get_metadata("DC", "creator")
+    if authors[0][0] == "Unknown Author":
+        book.author = Prompt.ask("Enter an author for this book")
+
     write_epub(args.filename + ".fixed.epub", book)
 
 
