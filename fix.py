@@ -1,6 +1,7 @@
 import re
 from argparse import ArgumentParser
 from pathlib import Path
+from functools import cache
 
 from ebooklib.epub import read_epub, write_epub
 from epubcheck import EpubCheck
@@ -12,10 +13,12 @@ def main():
     parser = ArgumentParser()
     parser.add_argument("filename", help="the file to read")
     args = parser.parse_args()
-    title = Prompt.ask(
-        "Enter a title for this book",
-        default=Path(args.filename).stem,
-        show_default=True,
+    title = cache(
+        lambda: Prompt.ask(
+            "Enter a title for this book",
+            default=Path(args.filename).stem,
+            show_default=True,
+        )
     )
 
     print("checking for issues")
@@ -50,18 +53,17 @@ def main():
             name = name.split("/", 2)[-1]
             item = next(i for i in book.items if i.file_name == name)
             if name.endswith("toc.xhtml"):
-                item.title = title
+                item.title = title()
             else:
                 item.title = Prompt.ask(
                     "Enter a title for this item",
-                    default=default_title,
                     show_default=True,
                 )
         else:
             raise Exception(f"Unknown issue: {msg}")
 
     if book.title == "Unknown Title":
-        book.title = title
+        book.title = title()
 
     authors = book.get_metadata("DC", "creator")
     if authors[0][0] == "Unknown Author":
