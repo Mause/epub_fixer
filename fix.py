@@ -1,6 +1,7 @@
-from argparse import ArgumentParser
-from ebooklib.epub import read_epub, write_epub
 import re
+from argparse import ArgumentParser
+
+from ebooklib.epub import read_epub, write_epub
 from epubcheck import EpubCheck
 from rich import print
 
