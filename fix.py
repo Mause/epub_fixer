@@ -5,41 +5,49 @@ from ebooklib.epub import read_epub, write_epub
 from epubcheck import EpubCheck
 from rich import print
 
-parser = ArgumentParser()
-parser.add_argument("filename", help="the file to read")
-args = parser.parse_args()
 
-print("checking for issues")
-result = EpubCheck(args.filename, autorun=False)
-result.run()
+def main():
+    parser = ArgumentParser()
+    parser.add_argument("filename", help="the file to read")
+    args = parser.parse_args()
 
-if not result.messages:
-    print("No issues found")
-    exit(0)
+    print("checking for issues")
+    result = EpubCheck(args.filename, autorun=False)
+    result.run()
 
-book = read_epub(args.filename, {"ignore_ncx": False})
+    if not result.messages:
+        print("No issues found")
+        exit(0)
 
-for message in result.messages:
-    print(message)
-    msg = message.message
-    if msg == 'The "direction" property must not be included in an EPUB Style Sheet.':
-        (item,) = book.get_items_of_media_type("text/css")
+    book = read_epub(args.filename, {"ignore_ncx": False})
 
-        item.content = re.sub(
-            r"(direction: [^;]+;)",
-            lambda *args: "",
-            item.content.decode("utf-8"),
-        ).encode("utf-8")
-    elif (
-        msg
-        == 'Warning while parsing file: The "head" element should have a "title" child element.'
-    ):
-        name, row, col = message.location.split(":")
-        name = name.split("/", 2)[-1]
-        item = next(i for i in book.items if i.file_name == name)
-        item.title = input("new title? ")
-    else:
-        raise Exception(f"Unknown issue: {msg}")
+    for message in result.messages:
+        print(message)
+        msg = message.message
+        if (
+            msg
+            == 'The "direction" property must not be included in an EPUB Style Sheet.'
+        ):
+            (item,) = book.get_items_of_media_type("text/css")
+
+            item.content = re.sub(
+                r"(direction: [^;]+;)",
+                lambda *args: "",
+                item.content.decode("utf-8"),
+            ).encode("utf-8")
+        elif (
+            msg
+            == 'Warning while parsing file: The "head" element should have a "title" child element.'
+        ):
+            name, row, col = message.location.split(":")
+            name = name.split("/", 2)[-1]
+            item = next(i for i in book.items if i.file_name == name)
+            item.title = input("new title? ")
+        else:
+            raise Exception(f"Unknown issue: {msg}")
+
+    write_epub(args.filename + ".fixed.epub", book)
 
 
-write_epub(args.filename + ".fixed.epub", book)
+if __name__ == "__main__":
+    main()
