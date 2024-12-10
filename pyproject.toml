@@ -8,6 +8,7 @@ dependencies = [
     "ebooklib>=0.18",
     "epubcheck>=5.1.0",
     "rich>=13.9.4",
+    "jpype1>=1.5.1",
 ]
 
 [dependency-groups]
