@@ -69,7 +69,9 @@ def main():
     if authors[0][0] == "Unknown Author":
         authors[0] = (Prompt.ask("Enter an author for this book"), {})
 
-    write_epub(args.filename + ".fixed.epub", book)
+    fixed = args.filename + ".fixed.epub"
+    write_epub(fixed, book)
+    print(f"Fixed book written to {fixed}")
 
 
 if __name__ == "__main__":
