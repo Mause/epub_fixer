@@ -9,6 +9,7 @@ dependencies = [
     "epubcheck>=5.1.0",
     "rich>=13.9.4",
     "jpype1>=1.5.1",
+    "rich-click>=1.8.5",
 ]
 
 [project.scripts]
