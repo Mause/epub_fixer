@@ -27,4 +27,4 @@ jobs:
       run: |
         python -m pip install --upgrade uv
         uv sync
-    - run: uv package
+    - run: uv build
