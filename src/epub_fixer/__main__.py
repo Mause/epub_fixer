@@ -30,7 +30,7 @@ def main(filename: str):
 
     if not result.messages:
         print("No issues found")
-        exit(0)
+        return 0
 
     book = read_epub(filename, {"ignore_ncx": False})
 
