@@ -19,6 +19,7 @@ epub_fixer = "epub_fixer.__main__:main"
 dev = [
     "pdbpp>=0.10.3",
     "pre-commit>=4.0.1",
+    "pytest>=8.3.4",
 ]
 
 [tool.ruff.lint]
