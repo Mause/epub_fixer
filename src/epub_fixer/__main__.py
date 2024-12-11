@@ -12,7 +12,7 @@ from rich.prompt import Prompt
 
 @click.command
 @click.argument("filename")
-def main(filename: str):
+def epub_fixer(filename: str):
     """
     filename\tthe file to fix
     """
@@ -30,7 +30,7 @@ def main(filename: str):
 
     if not result.messages:
         print("No issues found")
-        exit(0)
+        return 0
 
     book = read_epub(filename, {"ignore_ncx": False})
 
@@ -75,4 +75,4 @@ def main(filename: str):
 
 
 if __name__ == "__main__":
-    main()
+    epub_fixer()
