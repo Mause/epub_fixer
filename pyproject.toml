@@ -11,6 +11,9 @@ dependencies = [
     "jpype1>=1.5.1",
 ]
 
+[project.scripts]
+epub_fixer = "fix:main"
+
 [dependency-groups]
 dev = [
     "pdbpp>=0.10.3",
