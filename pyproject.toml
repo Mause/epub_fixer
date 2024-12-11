@@ -9,10 +9,11 @@ dependencies = [
     "epubcheck>=5.1.0",
     "rich>=13.9.4",
     "jpype1>=1.5.1",
+    "rich-click>=1.8.5",
 ]
 
 [project.scripts]
-epub_fixer = "fix:main"
+epub_fixer = "epub_fixer.__main__:main"
 
 [dependency-groups]
 dev = [
@@ -22,6 +23,9 @@ dev = [
 
 [tool.ruff.lint]
 select = ["I", "E", "F"]
+
+[tool.uv]
+package = true
 
 [tool.uv.sources]
 ebooklib = { git = "https://github.com/aerkalov/ebooklib" }

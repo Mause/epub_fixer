@@ -1,35 +1,37 @@
 import re
-from argparse import ArgumentParser
 from functools import cache
 from pathlib import Path
 
+import rich_click as click
 from ebooklib.epub import read_epub, write_epub
 from epubcheck import EpubCheck
 from rich import print
 from rich.prompt import Prompt
 
 
-def main():
-    parser = ArgumentParser()
-    parser.add_argument("filename", help="the file to read")
-    args = parser.parse_args()
+@click.command
+@click.argument("filename")
+def main(filename: str):
+    """
+    filename\tthe file to fix
+    """
     title = cache(
         lambda: Prompt.ask(
             "Enter a title for this book",
-            default=Path(args.filename).stem,
+            default=Path(filename).stem,
             show_default=True,
         )
     )
 
     print("checking for issues")
-    result = EpubCheck(args.filename, autorun=False)
+    result = EpubCheck(filename, autorun=False)
     result.run()
 
     if not result.messages:
         print("No issues found")
         exit(0)
 
-    book = read_epub(args.filename, {"ignore_ncx": False})
+    book = read_epub(filename, {"ignore_ncx": False})
 
     for message in result.messages:
         print(message)
@@ -66,7 +68,7 @@ def main():
     if authors[0][0] == "Unknown Author":
         authors[0] = (Prompt.ask("Enter an author for this book"), {})
 
-    fixed = args.filename + ".fixed.epub"
+    fixed = filename + ".fixed.epub"
     write_epub(fixed, book)
     print(f"Fixed book written to {fixed}")
 
