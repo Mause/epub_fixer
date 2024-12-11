@@ -6,6 +6,7 @@ import rich_click as click
 from ebooklib.epub import read_epub, write_epub
 from epubcheck import EpubCheck
 from rich import print
+from rich.console import Console
 from rich.prompt import Prompt
 
 
@@ -23,9 +24,9 @@ def main(filename: str):
         )
     )
 
-    print("checking for issues")
-    result = EpubCheck(filename, autorun=False)
-    result.run()
+    with Console().status("checking for issues"):
+        result = EpubCheck(filename, autorun=False)
+        result.run()
 
     if not result.messages:
         print("No issues found")
