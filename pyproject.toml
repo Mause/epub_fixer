@@ -12,7 +12,7 @@ dependencies = [
 ]
 
 [project.scripts]
-epub_fixer = "fix:main"
+epub_fixer = "epub_fixer.__main__:main"
 
 [dependency-groups]
 dev = [
@@ -22,6 +22,9 @@ dev = [
 
 [tool.ruff.lint]
 select = ["I", "E", "F"]
+
+[tool.uv]
+package = true
 
 [tool.uv.sources]
 ebooklib = { git = "https://github.com/aerkalov/ebooklib" }
