@@ -4,7 +4,7 @@ from urllib.request import urlretrieve
 from click.testing import CliRunner
 from pytest import fixture
 
-from .__main__ import main
+from .__main__ import epub_fixer
 
 
 @fixture
@@ -18,6 +18,6 @@ def happy_epub(tmp_path):
 def test_all_good(happy_epub):
     runner = CliRunner()
 
-    result = runner.invoke(main, [str(happy_epub)])
+    result = runner.invoke(epub_fixer, [str(happy_epub)])
     assert result.exit_code == 0
     assert result.output == "No issues found\n"

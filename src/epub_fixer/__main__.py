@@ -12,7 +12,7 @@ from rich.prompt import Prompt
 
 @click.command
 @click.argument("filename")
-def main(filename: str):
+def epub_fixer(filename: str):
     """
     filename\tthe file to fix
     """
@@ -75,4 +75,4 @@ def main(filename: str):
 
 
 if __name__ == "__main__":
-    main()
+    epub_fixer()

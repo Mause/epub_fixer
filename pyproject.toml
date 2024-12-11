@@ -13,7 +13,7 @@ dependencies = [
 ]
 
 [project.scripts]
-epub_fixer = "epub_fixer.__main__:main"
+epub_fixer = "epub_fixer.__main__:epub_fixer"
 
 [dependency-groups]
 dev = [
