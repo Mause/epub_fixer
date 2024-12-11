@@ -1,7 +1,7 @@
 [project]
-name = "fixer"
+name = "epub_fixer"
 version = "0.1.0"
-description = "Add your description here"
+description = "Makes OEBPS files into valid EPUB files"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
