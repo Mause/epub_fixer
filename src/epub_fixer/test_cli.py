@@ -1,6 +1,7 @@
 from os.path import basename
 from urllib.request import urlretrieve
 
+from click.testing import CliRunner
 from pytest import fixture
 
 from .__main__ import main
@@ -15,4 +16,8 @@ def happy_epub(tmp_path):
 
 
 def test_all_good(happy_epub):
-    assert main([str(happy_epub)], standalone_mode=False) == 0
+    runner = CliRunner()
+
+    result = runner.invoke(main, [str(happy_epub)])
+    assert result.exit_code == 0
+    assert result.output == "No issues found\n"
