@@ -30,7 +30,9 @@ def epub_fixer(filename: str):
 
     book = read_epub(filename, {"ignore_ncx": False})
 
-    print(book.get_metadata("OPF", "generator")[0][1]["content"])
+    generator = book.get_metadata("OPF", "generator")
+    if generator:
+        print(generator[0][1]["content"])
 
     if not result.messages:
         print("No issues found")
