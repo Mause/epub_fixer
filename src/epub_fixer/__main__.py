@@ -28,13 +28,13 @@ def epub_fixer(filename: str):
         result = EpubCheck(filename, autorun=False)
         result.run()
 
-    if not result.messages:
-        print("No issues found")
-        return 0
-
     book = read_epub(filename, {"ignore_ncx": False})
 
     print(book.get_metadata("OPF", "generator")[0][1]["content"])
+
+    if not result.messages:
+        print("No issues found")
+        return 0
 
     for message in result.messages:
         print(message)
