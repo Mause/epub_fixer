@@ -1,0 +1,14 @@
+# serializer version: 1
+# name: test_issues
+  '''
+  Message(
+      id='NCX-001',
+      level='ERROR',
+      location='JQuery-Hello-World.epub/OEBPS/toc.ncx',
+      message='NCX identifier ("e37ff260-d35c-11e0-9572-0800200c9a66") does not 
+  match OPF identifier ("urn:uuid:e37ff260-d35c-11e0-9572-0800200c9a66").',
+      suggestion=None
+  )
+  
+  '''
+# ---
