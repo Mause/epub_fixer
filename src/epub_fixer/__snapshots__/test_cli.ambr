@@ -12,3 +12,6 @@
   
   '''
 # ---
+# name: test_issues.1
+  Exception('Unknown issue: NCX identifier ("e37ff260-d35c-11e0-9572-0800200c9a66") does not match OPF identifier ("urn:uuid:e37ff260-d35c-11e0-9572-0800200c9a66").')
+# ---

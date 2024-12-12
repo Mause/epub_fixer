@@ -42,3 +42,4 @@ def test_issues(unhappy_epub, snapshot):
     result = runner.invoke(epub_fixer, [str(unhappy_epub)])
     assert result.exit_code == 1
     assert result.output == snapshot
+    assert result.exception == snapshot
