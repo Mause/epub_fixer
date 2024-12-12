@@ -34,6 +34,8 @@ def epub_fixer(filename: str):
 
     book = read_epub(filename, {"ignore_ncx": False})
 
+    print(book.get_metadata("OPF", "generator")[0][1]["content"])
+
     for message in result.messages:
         print(message)
         msg = message.message
