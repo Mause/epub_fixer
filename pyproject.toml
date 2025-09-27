@@ -10,6 +10,9 @@ dependencies = [
     "rich>=13.9.4",
     "jpype1>=1.7.0",
     "rich-click>=1.8.5",
+    "zeep>=4.3.2",
+    "pudb>=2025.1",
+    "lxml>=6.0.1",
 ]
 
 [project.scripts]
