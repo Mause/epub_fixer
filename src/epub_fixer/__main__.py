@@ -1,18 +1,23 @@
+import logging
 import re
 from functools import cache
+from os.path import basename
 from pathlib import Path
 
 import rich_click as click
 from ebooklib.epub import read_epub, write_epub
 from epubcheck import EpubCheck
+from lxml import etree, html
 from rich import print
 from rich.console import Console
 from rich.prompt import Prompt
 
+logger = logging.getLogger(__name__)
+
 
 @click.command
 @click.argument("filename")
-def epub_fixer(filename: str):
+def epub_fixer(filename: Path):
     """
     filename\tthe file to fix
     """
@@ -23,7 +28,6 @@ def epub_fixer(filename: str):
             show_default=True,
         )
     )
-
     with Console().status("checking for issues"):
         result = EpubCheck(filename, autorun=False)
         result.run()
@@ -41,6 +45,8 @@ def epub_fixer(filename: str):
     for message in result.messages:
         print(message)
         msg = message.message
+        name, row, col = message.location.split(":")
+        name = basename(name)
         if (
             msg
             == 'The "direction" property must not be included in an EPUB Style Sheet.'
@@ -53,8 +59,6 @@ def epub_fixer(filename: str):
                 item.content.decode("utf-8"),
             ).encode("utf-8")
         elif msg.endswith('The "head" element should have a "title" child element.'):
-            name, row, col = message.location.split(":")
-            name = name.split("/", 2)[-1]
             item = next(i for i in book.items if i.file_name == name)
             if name.endswith("toc.xhtml"):
                 item.title = title()
@@ -63,6 +67,19 @@ def epub_fixer(filename: str):
                     "Enter a title for this item",
                     show_default=True,
                 )
+        elif msg.startswith(
+            "Error while parsing file: "
+            'element "bold" not allowed here; expected the element'
+        ) or msg.startswith(
+            "Fatal Error while parsing file: "
+            'The element type "p" must be terminated by the matching end-tag "</p>".'
+        ):
+            breakpoint()
+            item = next(i for i in book.items if i.file_name == name)
+            for node in html.fromstring(item.content).iter():
+                if node.sourceline == int(row):
+                    print(f"Fixing node {node.tag} on line {row}")
+            logger.warning(msg)
         else:
             raise Exception(f"Unknown issue: {msg}")
 
@@ -73,10 +90,11 @@ def epub_fixer(filename: str):
     if authors[0][0] == "Unknown Author":
         authors[0] = (Prompt.ask("Enter an author for this book"), {})
 
-    fixed = filename + ".fixed.epub"
+    fixed = filename.with_suffix(".fixed.epub")
     write_epub(fixed, book)
-    print(f"Fixed book written to {fixed}")
+    print("Fixed book written to", fixed)
 
 
 if __name__ == "__main__":
+    breakpoint()
     epub_fixer()
