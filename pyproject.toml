@@ -19,7 +19,7 @@ epub_fixer = "epub_fixer.__main__:epub_fixer"
 dev = [
     "pdbpp>=0.10.3",
     "pre-commit>=4.0.1",
-    "pytest>=8.3.4",
+    "pytest>=9.0.3",
     "syrupy>=4.8.0",
 ]
 
