@@ -9,6 +9,8 @@ dependencies = [
   "epubcheck>=5.1.0",
   "jpype1>=1.7.0",
   "lxml>=6.0.1",
+  "pydantic>=2.12.5",
+  "pydantic-core==2.41.5",
   "rich>=13.9.4",
   "rich-click>=1.8.5",
 ]
