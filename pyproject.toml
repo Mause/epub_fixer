@@ -5,14 +5,14 @@ description = "Makes OEBPS files into valid EPUB files"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "ebooklib>=0.18",
-    "epubcheck>=5.1.0",
-    "rich>=13.9.4",
-    "jpype1>=1.7.0",
-    "rich-click>=1.8.5",
-    "zeep>=4.3.2",
-    "pudb>=2025.1",
-    "lxml>=6.0.1",
+  "ebooklib>=0.18",
+  "epubcheck>=5.1.0",
+  "jpype1>=1.7.0",
+  "lxml>=6.0.1",
+  "pudb>=2025.1",
+  "rich>=13.9.4",
+  "rich-click>=1.8.5",
+  "zeep>=4.3.2",
 ]
 
 [project.scripts]
@@ -20,10 +20,11 @@ epub_fixer = "epub_fixer.__main__:epub_fixer"
 
 [dependency-groups]
 dev = [
-    "pdbpp>=0.10.3",
-    "pre-commit>=4.0.1",
-    "pytest>=8.3.4",
-    "syrupy>=4.8.0",
+  "pdbpp>=0.10.3",
+  "pre-commit>=4.0.1",
+  "pudb>=2025.1",
+  "pytest>=8.3.4",
+  "syrupy>=4.8.0",
 ]
 
 [tool.ruff.lint]
