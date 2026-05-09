@@ -105,7 +105,7 @@ def epub_fixer(filename: Path):
                     print(f"Fixing node {node.tag} on line {row}")
             logger.warning(msg)
         else:
-            raise Exception(f"Unknown issue: {msg}")
+            logger.error("Unknown issue: %s", msg)
 
     if book.title == "Unknown Title":
         book.get_metadata("DC", "title")[0] = (title(), {})
