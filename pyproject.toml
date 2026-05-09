@@ -8,6 +8,7 @@ dependencies = [
   "ebooklib>=0.18",
   "epubcheck>=5.1.0",
   "jpype1>=1.7.0",
+  "lxml>=6.0.1",
   "rich>=13.9.4",
   "rich-click>=1.8.5",
 ]
@@ -18,6 +19,7 @@ epub_fixer = "epub_fixer.__main__:epub_fixer"
 [dependency-groups]
 dev = [
   "pdbpp>=0.10.3",
+  "pudb>=2025.1",
   "pytest>=8.3.4",
   "syrupy>=4.8.0",
 ]
