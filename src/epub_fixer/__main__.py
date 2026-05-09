@@ -3,16 +3,35 @@ import re
 from functools import cache
 from os.path import basename
 from pathlib import Path
+from typing import Annotated, Literal
 
 import rich_click as click
 from ebooklib.epub import read_epub, write_epub
 from epubcheck import EpubCheck
 from lxml import etree, html
+from pydantic import BaseModel, Field, TypeAdapter
 from rich import print
 from rich.console import Console
 from rich.prompt import Prompt
 
 logger = logging.getLogger(__name__)
+
+
+class Location(BaseModel):
+    url: dict[str, bool]
+    path: str
+    line: int
+    column: int
+    context: str | None
+
+
+class Message(BaseModel):
+    message: str
+    id: Annotated[str, Field(alias="ID")]
+    severity: Literal["ERROR", "WARNING", "INFO"]
+    additionalLocations: int
+    suggestion: str | None
+    locations: list[Location]
 
 
 @click.command
@@ -42,10 +61,15 @@ def epub_fixer(filename: Path):
         print("No issues found")
         return 0
 
-    for message in result.messages:
+    for message in TypeAdapter(list[Message]).validate_python(
+        result.result_data["messages"]
+    ):
         print(message)
         msg = message.message
-        name, row, col = message.location.split(":")
+        location, = message.locations
+        name = location.path
+        row = location.line
+        col = location.column
         name = basename(name)
         if (
             msg
