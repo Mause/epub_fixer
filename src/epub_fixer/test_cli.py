@@ -39,7 +39,7 @@ def unhappy_epub(tmp_path):
 def test_issues(unhappy_epub, snapshot):
     runner = CliRunner()
 
-    result = runner.invoke(epub_fixer, [str(unhappy_epub)])
+    result = runner.invoke(epub_fixer, [str(unhappy_epub)], catch_exceptions=False)
     assert result.exit_code == 1
     assert result.output == snapshot
     assert result.exception == snapshot

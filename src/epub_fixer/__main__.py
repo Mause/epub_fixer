@@ -115,7 +115,13 @@ def epub_fixer(filename: Path):
         authors[0] = (Prompt.ask("Enter an author for this book"), {})
 
     fixed = filename.with_suffix(".fixed.epub")
-    write_epub(fixed, book)
+    write_epub(
+        fixed,
+        book,
+        {
+            "raise_exceptions": True,
+        },
+    )
     print("Fixed book written to", fixed)
 
 
