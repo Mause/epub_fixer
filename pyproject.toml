@@ -3,16 +3,14 @@ name = "epub_fixer"
 version = "0.1.0"
 description = "Makes OEBPS files into valid EPUB files"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.13"
 dependencies = [
   "ebooklib>=0.18",
   "epubcheck>=5.1.0",
   "jpype1>=1.7.0",
   "lxml>=6.0.1",
-  "pudb>=2025.1",
   "rich>=13.9.4",
   "rich-click>=1.8.5",
-  "zeep>=4.3.2",
 ]
 
 [project.scripts]
