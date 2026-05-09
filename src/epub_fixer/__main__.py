@@ -35,7 +35,7 @@ class Message(BaseModel):
 
 
 @click.command
-@click.argument("filename")
+@click.argument("filename", type=click.Path(exists=True, path_type=Path))
 def epub_fixer(filename: Path):
     """
     filename\tthe file to fix
